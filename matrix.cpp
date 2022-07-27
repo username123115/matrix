@@ -51,7 +51,7 @@ ifstream file_A(fileName); // input file stream to open the file A.txt
     }
     else
     {
-        cout << " WTF! failed to open. \n";
+        cout << " File failed to open. \n";
     }
     
     int j;
@@ -72,4 +72,32 @@ ifstream file_A(fileName); // input file stream to open the file A.txt
     m_rowSize = rowSize;
     delete [] vector_A; // Tying up loose ends
 
+}
+
+//arithmetic
+Matrix Matrix::operator+(Matrix &B)
+{
+    Matrix sum(m_colSize, m_rowSize, 0.0);
+    unsigned i, j;
+    for (i = 0; i < m_rowSize; i++)
+    {
+        for (j = 0; j < m_col_size; j++)
+        {
+            sum(i, j) = this->m_matrix[i][j] + B(i, j);
+        }
+    }
+    return sum;
+}
+Matrix Matrix::operator-(Matrix &B)
+{
+    Matrix diff(m_colSize, m_rowSize, 0.0);
+    unsigned i, j;
+    for (i = 0; i < m_rowSize; i++)
+    {
+        for (j = 0; j < m_colSize; j++)
+        {
+            diff(i, j) = this->m_matrix[i][j] + B(i, j);
+        }
+    }
+    return diff;
 }

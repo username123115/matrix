@@ -101,3 +101,29 @@ Matrix Matrix::operator-(Matrix &B)
     }
     return diff;
 }
+Matrix Matrix::operator*(Matrix &B)
+{
+    Matrix product(m_rowSize, B.getCols(), 0.0);
+    if(m_colSize == B.getRows()) 
+    {
+        unsigned i, j, k;
+        double temp = 0.0;
+        for (i = 0; i < m_rowSize; i++)
+        {
+            for (j = 0; j < B.getCols(); j++)
+            {
+                temp = 0.0;
+                for (k = 0; k < m_colSize; k++)
+                {
+                    temp += m_matrix[i][k] * B(k, j);
+                }
+                product(i, j) = temp;
+            }
+        }
+        return product;
+    }
+    else
+    {
+        exit(1);
+    }
+}

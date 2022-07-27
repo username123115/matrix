@@ -81,9 +81,9 @@ Matrix Matrix::operator+(Matrix &B)
     unsigned i, j;
     for (i = 0; i < m_rowSize; i++)
     {
-        for (j = 0; j < m_col_size; j++)
+        for (j = 0; j < m_colSize; j++)
         {
-            sum(i, j) = this->m_matrix[i][j] + B(i, j);
+            sum(i, j) = m_matrix[i][j] + B(i, j);
         }
     }
     return sum;
@@ -115,7 +115,7 @@ Matrix Matrix::operator*(Matrix &B)
                 temp = 0.0;
                 for (k = 0; k < m_colSize; k++)
                 {
-                    temp += m_matrix[i][k] * B(k, j);
+                    temp += m_matrix[i][k] * B(k, j); //calculating dot product
                 }
                 product(i, j) = temp;
             }
@@ -127,3 +127,58 @@ Matrix Matrix::operator*(Matrix &B)
         exit(1);
     }
 }
+ //scaler operations
+ Matrix Matrix::operator+(double scalar)
+ {
+    Matrix sum(m_rowSize, m_colSize, 0.0);
+    unsigned i, j;
+    for (i = 0; i < m_rowSize, i++)
+    {
+        for (j = 0; j < m_colSize, j++)
+        {
+            sum(i, j) = m_matrix[i][j] + scalar;
+        }
+    }
+    return product;
+ }
+
+ Matrix Matrix::operator-(double scalar)
+ {
+    Matrix diff(m_rowSize, m_colSize, 0.0);
+    unsigned i, j;
+    for (i = 0; i < m_rowSize, i++)
+    {
+        for (j = 0; j < m_colSize, j++)
+        {
+            diff(i, j) = m_matrix[i][j] - scalar;
+        }
+    }
+    return diff;
+ }
+
+ Matrix Matrix::operator*(double scalar)
+ {
+    Matrix product(m_rowSize, m_colSize, 0.0);
+    unsigned i, j;
+    for (i = 0; i < m_rowSize, i++)
+    {
+        for (j = 0; j < m_colSize, j++)
+        {
+            product(i, j) = m_matrix[i][j] * scalar;
+        }
+    }
+    return product;
+ }
+  Matrix Matrix::operator/(double scalar)
+ {
+    Matrix product(m_rowSize, m_colSize, 0.0);
+    unsigned i, j;
+    for (i = 0; i < m_rowSize, i++)
+    {
+        for (j = 0; j < m_colSize, j++)
+        {
+            product(i, j) = m_matrix[i][j] / scalar;
+        }
+    }
+    return product;
+ }

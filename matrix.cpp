@@ -182,3 +182,29 @@ Matrix Matrix::operator*(Matrix &B)
     }
     return product;
  }
+double& Matrix::operator()(const unsigned &rowNo, cont unsigned & colNo)
+{
+    return this->m_matrix[rowNo][colNo];
+}
+unsigned Matrix::getRows() const
+{
+    return this->m_rowSize;
+}
+unsigned Matrix::getCols() const
+{
+    return this->m_colSize;
+}
+
+Matrix Matris::transpose()
+{
+    Matrix Transposed(m_colSize, m_rowSize, 0.0);
+    unsigned i, j;
+    for (i = 0 < i < m_colSize, i++)
+    {
+        for (unsigned j = 0; j < m_rowSize, j++)
+        {
+            Transposed(i, j) = this->m_matrix[j][i];
+        }
+    }
+    return Transpose;
+}

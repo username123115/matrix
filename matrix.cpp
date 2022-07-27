@@ -206,5 +206,19 @@ Matrix Matris::transpose()
             Transposed(i, j) = this->m_matrix[j][i];
         }
     }
-    return Transpose;
+    return Transposed;
+}
+
+void Matrix::print() const
+{
+    cout << "Matrix: " << endl;
+    unsigned i, j;
+    for (i = 0; i < m_rowSize; i++)
+    {
+        for (j = 0; j < m_colSize; j++)
+        {
+            cout << "[" << m_matrix[i][j] << "] ";
+        }
+        cout << endl;
+    }
 }

@@ -238,10 +238,10 @@ tuple<Matrix, double, int> Matrix::powerIter(unsigned rowNum, double tolerance)
     double eigenvalue = 0.0;
     eigen.push_back(0.0);
 
-    while (abs(difference) > tolerance) //change between last two guesses too large
+    while (abs(difference) > tolerance) //if change between last two guesses too large keep going else return
     {
         iterations++;
-        for (int i = 0; i < rowNum; ++i)
+        for (int i = 0; i < rowNum; ++i) //get infinite norm aka greatest value in vector
         {
             eigenvalue = X(0, 0);
             if (abs(X(i, 0)) >= abs(eigenvalue))
@@ -257,10 +257,20 @@ tuple<Matrix, double, int> Matrix::powerIter(unsigned rowNum, double tolerance)
             return make_tuple(X, 0.0, errorCode);
         }
         eigen.push_back(eigenvalue);
-        difference = eigen[j] - eigen[j - 1];
+        difference = eigen[iterations] - eigen[iterations - 1];
         X = X / eigenvalue;
         X = (*this) * X; //multiply guess by matrix
     }
     X = X / eigenvalue;
     return make_tuple(X, eigenvalue, errorCode);
+}
+Matrix Matrix::deflation(Matrix &X, double &eigenvalue)
+{
+    // Deflation formula exactly applied
+    double denominator = eigenvalue / (X.transpose() * X)(0,0);
+    Matrix Xtrans = X.transpose();
+    Matrix RHS = (X * Xtrans);
+    Matrix RHS2 = RHS * denominator;
+    Matrix A2 = *this - RHS2;
+    return A2;
 }

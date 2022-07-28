@@ -222,3 +222,45 @@ void Matrix::print() const
         cout << endl;
     }
 }
+tuple<Matrix, double, int> Matrix::powerIter(unsigned rowNum, double tolerance)
+{
+    //initiate guess
+    Matrix X(rowNum, 1, 1.0);
+    for (unsigned i = 1; i <= rowNum; i++)
+    {
+        X(i-1, 0) = i;
+    }
+    int errorCode = 0;
+    double difference = 1.0; //used for finding when to stop after changes are small enough
+    unsigned iterations = 0;
+    unsigned location; //where largest located
+    vector<double> eigen;
+    double eigenvalue = 0.0;
+    eigen.push_back(0.0);
+
+    while (abs(difference) > tolerance) //change between last two guesses too large
+    {
+        iterations++;
+        for (int i = 0; i < rowNum; ++i)
+        {
+            eigenvalue = X(0, 0);
+            if (abs(X(i, 0)) >= abs(eigenvalue))
+            {
+                eigenvalue = X(i, 0);
+                location = i;
+            }
+        }
+        if (iterations >= 5e5)
+        {
+            cout <<"Iterations exceeded maximum amount" << endl;
+            errorCode = -1;
+            return make_tuple(X, 0.0, errorCode);
+        }
+        eigen.push_back(eigenvalue);
+        difference = eigen[j] - eigen[j - 1];
+        X = X / eigenvalue;
+        X = (*this) * X; //multiply guess by matrix
+    }
+    X = X / eigenvalue;
+    return make_tuple(X, eigenvalue, errorCode);
+}

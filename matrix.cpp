@@ -3,7 +3,7 @@ using namespace std;
 
 Matrix::Matrix(unsigned rowSize, unsigned colSize, double initial)
 {
-    m_rowSize = rowsize;
+    m_rowSize = rowSize;
     m_colSize = colSize;
     m_matrix.resize(rowSize);
     for (unsigned i = 0; i < m_matrix.size(); i++)
@@ -12,9 +12,10 @@ Matrix::Matrix(unsigned rowSize, unsigned colSize, double initial)
     }
 
 }
+
 Matrix::Matrix(const char * filename)
 {
-ifstream file_A(fileName); // input file stream to open the file A.txt
+ifstream file_A(filename); // input file stream to open the file A.txt
 
     // Task 1
     // Keeps track of the Column and row sizes
@@ -71,6 +72,14 @@ ifstream file_A(fileName); // input file stream to open the file A.txt
     m_colSize = colSize;
     m_rowSize = rowSize;
     delete [] vector_A; // Tying up loose ends
+
+}
+
+Matrix::Matrix(const Matrix&B)
+{
+    m_rowSize = B.getRows();
+    m_colSize = B.getCols();
+    m_matrix = B.m_matrix;
 
 }
 
@@ -132,23 +141,23 @@ Matrix Matrix::operator*(Matrix &B)
  {
     Matrix sum(m_rowSize, m_colSize, 0.0);
     unsigned i, j;
-    for (i = 0; i < m_rowSize, i++)
+    for (i = 0; i < m_rowSize; i++)
     {
-        for (j = 0; j < m_colSize, j++)
+        for (j = 0; j < m_colSize; j++)
         {
             sum(i, j) = m_matrix[i][j] + scalar;
         }
     }
-    return product;
+    return sum;
  }
 
  Matrix Matrix::operator-(double scalar)
  {
     Matrix diff(m_rowSize, m_colSize, 0.0);
     unsigned i, j;
-    for (i = 0; i < m_rowSize, i++)
+    for (i = 0; i < m_rowSize; i++)
     {
-        for (j = 0; j < m_colSize, j++)
+        for (j = 0; j < m_colSize; j++)
         {
             diff(i, j) = m_matrix[i][j] - scalar;
         }
@@ -160,9 +169,9 @@ Matrix Matrix::operator*(Matrix &B)
  {
     Matrix product(m_rowSize, m_colSize, 0.0);
     unsigned i, j;
-    for (i = 0; i < m_rowSize, i++)
+    for (i = 0; i < m_rowSize; i++)
     {
-        for (j = 0; j < m_colSize, j++)
+        for (j = 0; j < m_colSize; j++)
         {
             product(i, j) = m_matrix[i][j] * scalar;
         }
@@ -173,16 +182,16 @@ Matrix Matrix::operator*(Matrix &B)
  {
     Matrix product(m_rowSize, m_colSize, 0.0);
     unsigned i, j;
-    for (i = 0; i < m_rowSize, i++)
+    for (i = 0; i < m_rowSize; i++)
     {
-        for (j = 0; j < m_colSize, j++)
+        for (j = 0; j < m_colSize; j++)
         {
             product(i, j) = m_matrix[i][j] / scalar;
         }
     }
     return product;
  }
-double& Matrix::operator()(const unsigned &rowNo, cont unsigned & colNo)
+double& Matrix::operator()(const unsigned &rowNo, const unsigned & colNo)
 {
     return this->m_matrix[rowNo][colNo];
 }
@@ -195,13 +204,13 @@ unsigned Matrix::getCols() const
     return this->m_colSize;
 }
 
-Matrix Matris::transpose()
+Matrix Matrix::transpose()
 {
     Matrix Transposed(m_colSize, m_rowSize, 0.0);
     unsigned i, j;
-    for (i = 0 < i < m_colSize, i++)
+    for (i = 0; i < m_colSize; i++)
     {
-        for (unsigned j = 0; j < m_rowSize, j++)
+        for (unsigned j = 0; j < m_rowSize; j++)
         {
             Transposed(i, j) = this->m_matrix[j][i];
         }

@@ -20,7 +20,7 @@ public:
     Matrix(unsigned, unsigned, double); //matrix made from specifying row height and data
     Matrix(const char *); //matrix takenffrom data in a file
     Matrix(const Matrix &); //matrix made from matrix
-    ~Matrix(); //destructor for matrix class
+    //~Matrix(); //destructor for matrix class
 
     //operator overloading
     Matrix operator+(Matrix &);

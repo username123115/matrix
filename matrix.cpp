@@ -282,4 +282,4 @@ Matrix Matrix::deflation(Matrix &X, double &eigenvalue)
     Matrix RHS2 = RHS * denominator;
     Matrix A2 = *this - RHS2;
     return A2;
-}
+} 

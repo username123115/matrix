@@ -26,7 +26,8 @@ public:
     Matrix operator+(Matrix &);
     Matrix operator-(Matrix &);
     Matrix operator*(Matrix &);
-    Matrix transpose();
+    double& operator()(const unsigned &, const unsigned &); //allows accessing matrix values
+    Matrix transpose(); 
 
     //Scalar Operations
     Matrix operator+(double);
@@ -34,11 +35,12 @@ public:
     Matrix operator*(double);
     Matrix operator/(double);
 
-    double& operator()(const unsigned &, const unsigned &); //allows accessing matrix values
     void print() const;
     unsigned getRows() const;
     unsigned getCols() const;
 
+    //experimental inverse function
+    Matrix get_inverse();
     tuple<Matrix, double, int> powerIter(unsigned, double);
     Matrix deflation(Matrix &, double&);
 

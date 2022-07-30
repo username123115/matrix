@@ -283,3 +283,65 @@ Matrix Matrix::deflation(Matrix &X, double &eigenvalue)
     Matrix A2 = *this - RHS2;
     return A2;
 } 
+
+Matrix Matrix::get_inverse()
+{
+    //Initialize Identity Matrix
+    //Perform elementary operations to reduce matrix to row echelon form
+    if (m_rowSize != m_colSize)
+    {
+        exit(1);
+    }
+    else
+    {
+        //Initializing Identity and copy to operate on
+        Matrix Identity(m_rowSize, m_colSize, 0.0);
+        for (int i = 0; i < m_rowSize; i++)
+        {
+            Identity(i, i) = 1.0;
+        }
+        Matrix elementary(Identity);
+        Matrix copy(*this);
+        //row echelon form
+        for (int i = 0; i < m_rowSize; i++)
+        {
+            if (copy(i, i) != 1.0)
+            {
+                elementary(i, i) = (1.0 / copy(i, i));
+                copy = elementary * copy;
+                Identity = elementary * Identity;
+                //set back to identity matrix
+                elementary(i, i) = 1.0;
+            }
+            if (i != m_rowSize - 1)
+            {
+                for (int j = i + 1; j < m_rowSize; j++)
+                {
+                    double temp = copy(j, i);
+                    elementary(j, i) = (-1.0 * temp);
+                    copy = elementary * copy;
+                    Identity = elementary * Identity;
+                    //copy.print();
+                    //std::cout << "Operation performed: " << std::endl;
+                    //elementary.print();
+                    elementary(j, i) = 0.0;
+                }
+            }
+        }
+        //iterate through indices 1-end
+        //iterate through j, j < i
+        for (int i = 1; i < m_rowSize; i++)
+        {
+            for (int j = 0; j < i; j++)
+            {
+                double temp = copy(j, i);
+                elementary(j, i) = (-1.0 * temp);
+                copy = elementary * copy;
+                Identity = elementary * Identity;
+                elementary(j, i) = 0.0;
+            }
+        }
+
+        return Identity;
+    }
+}

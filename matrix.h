@@ -19,6 +19,8 @@ class Matrix
 {
 public:
     Matrix(unsigned, unsigned, T);
+    Matrix(const char *);
+    Matrix(const Matrix<T> &);
 
     //operator overloading
     Matrix<T> operator+(Matrix<T> &); //template support

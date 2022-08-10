@@ -1,19 +1,19 @@
 # include "matrix.h"
 using namespace std;
-
-Matrix::Matrix(unsigned rowSize, unsigned colSize, double initial)
+template <class T>
+Matrix<T>::Matrix(unsigned rowSize, unsigned colSize, T initial)
 {
     m_rowSize = rowSize;
     m_colSize = colSize;
     m_matrix.resize(rowSize);
     for (unsigned i = 0; i < m_matrix.size(); i++)
     {
-        m_matrix[i].resize(colSize, initial);
+        m_matrix[i].resize(colSize, initial); //fill with initial
     }
 
 }
-
-Matrix::Matrix(const char * filename)
+template <class T>
+Matrix<T>::Matrix(const char * filename)
 {
 ifstream file_A(filename); // input file stream to open the file A.txt
 
@@ -25,8 +25,8 @@ ifstream file_A(filename); // input file stream to open the file A.txt
     // read it as a vector
     string line_A;
     int idx = 0;
-    double element_A;
-    double *vector_A = nullptr;
+    T element_A;
+    T *vector_A = nullptr;
     
     if (file_A.is_open() && file_A.good())
     {
@@ -42,7 +42,7 @@ ifstream file_A(filename); // input file stream to open the file A.txt
                 if (!stream_A)
                     break;
                 colSize += 1;
-                double *tempArr = new double[idx + 1];
+                T *tempArr = new T[idx + 1];
                 copy(vector_A, vector_A + idx, tempArr);
                 tempArr[idx] = element_A;
                 vector_A = tempArr;
@@ -74,8 +74,8 @@ ifstream file_A(filename); // input file stream to open the file A.txt
     delete [] vector_A; // Tying up loose ends
 
 }
-
-Matrix::Matrix(const Matrix&B)
+template <class T>
+Matrix<T>::Matrix(const Matrix<T>&B)
 {
     m_rowSize = B.getRows();
     m_colSize = B.getCols();
@@ -119,7 +119,7 @@ Matrix<T> Matrix<T>::operator*(Matrix<T> &B)
     if(m_colSize == B.getRows()) 
     {
         unsigned i, j, k;
-        (T) temp = 0;
+        T temp = 0;
         for (i = 0; i < m_rowSize; i++)
         {
             for (j = 0; j < B.getCols(); j++)
@@ -140,7 +140,8 @@ Matrix<T> Matrix<T>::operator*(Matrix<T> &B)
     }
 }
  //scaler operations
- Matrix Matrix::operator+(double scalar)
+ template <class T>
+ Matrix<T> Matrix<T>::operator+(double scalar)
  {
     Matrix sum(m_rowSize, m_colSize, 0.0);
     unsigned i, j;
@@ -148,13 +149,13 @@ Matrix<T> Matrix<T>::operator*(Matrix<T> &B)
     {
         for (j = 0; j < m_colSize; j++)
         {
-            sum(i, j) = m_matrix[i][j] + scalar;
+            sum(i, j) = (T) (m_matrix[i][j] + scalar);
         }
     }
     return sum;
  }
-
- Matrix Matrix::operator-(double scalar)
+template <class T>
+ Matrix<T> Matrix<T>::operator-(double scalar)
  {
     Matrix diff(m_rowSize, m_colSize, 0.0);
     unsigned i, j;
@@ -162,13 +163,13 @@ Matrix<T> Matrix<T>::operator*(Matrix<T> &B)
     {
         for (j = 0; j < m_colSize; j++)
         {
-            diff(i, j) = m_matrix[i][j] - scalar;
+            diff(i, j) = (T) (m_matrix[i][j] - scalar);
         }
     }
     return diff;
  }
-
- Matrix Matrix::operator*(double scalar)
+template <class T>
+ Matrix<T> Matrix<T>::operator*(double scalar)
  {
     Matrix product(m_rowSize, m_colSize, 0.0);
     unsigned i, j;
@@ -176,12 +177,13 @@ Matrix<T> Matrix<T>::operator*(Matrix<T> &B)
     {
         for (j = 0; j < m_colSize; j++)
         {
-            product(i, j) = m_matrix[i][j] * scalar;
+            product(i, j) = (T) (m_matrix[i][j] * scalar);
         }
     }
     return product;
  }
-  Matrix Matrix::operator/(double scalar)
+ template <class T>
+  Matrix<T> Matrix<T>::operator/(double scalar)
  {
     Matrix product(m_rowSize, m_colSize, 0.0);
     unsigned i, j;
@@ -189,27 +191,30 @@ Matrix<T> Matrix<T>::operator*(Matrix<T> &B)
     {
         for (j = 0; j < m_colSize; j++)
         {
-            product(i, j) = m_matrix[i][j] / scalar;
+            product(i, j) = (T) (m_matrix[i][j] / scalar);
         }
     }
     return product;
  }
-double& Matrix::operator()(const unsigned &rowNo, const unsigned & colNo)
+ template <class T>
+T& Matrix<T>::operator()(const unsigned &rowNo, const unsigned & colNo)
 {
     return this->m_matrix[rowNo][colNo];
 }
-unsigned Matrix::getRows() const
+template <class T>
+unsigned Matrix<T>::getRows() const
 {
     return this->m_rowSize;
 }
-unsigned Matrix::getCols() const
+template <class T>
+unsigned Matrix<T>::getCols() const
 {
     return this->m_colSize;
 }
-
-Matrix Matrix::transpose()
+template <class T>
+Matrix<T> Matrix<T>::transpose()
 {
-    Matrix Transposed(m_colSize, m_rowSize, 0.0);
+    Matrix<T> Transposed(m_colSize, m_rowSize, (T) 0);
     unsigned i, j;
     for (i = 0; i < m_colSize; i++)
     {
@@ -220,8 +225,8 @@ Matrix Matrix::transpose()
     }
     return Transposed;
 }
-
-void Matrix::print() const
+template <class T>
+void Matrix<T>::print() const
 {
     cout << "Matrix: " << endl;
     unsigned i, j;
@@ -292,8 +297,8 @@ Matrix<double> Matrix<T>::deflation(Matrix<T> &X, double &eigenvalue)
     return A2;
 } 
 */
-
-Matrix Matrix::get_inverse()
+template <class T>
+Matrix<T> Matrix<T>::get_inverse()
 {
     //Initialize Identity Matrix
     //Perform elementary operations to reduce matrix to row echelon form

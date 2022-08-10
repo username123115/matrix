@@ -84,44 +84,47 @@ Matrix::Matrix(const Matrix&B)
 }
 
 //arithmetic
-Matrix Matrix::operator+(Matrix &B)
+template <class T>
+Matrix<T> Matrix<T>::operator+(Matrix<T> &B)
 {
-    Matrix sum(m_colSize, m_rowSize, 0.0);
+    Matrix<T> sum(m_colSize, m_rowSize, (T) 0);
     unsigned i, j;
     for (i = 0; i < m_rowSize; i++)
     {
         for (j = 0; j < m_colSize; j++)
         {
-            sum(i, j) = m_matrix[i][j] + B(i, j);
+            sum(i, j) = this->m_matrix[i][j] + B(i, j);
         }
     }
     return sum;
 }
-Matrix Matrix::operator-(Matrix &B)
+template <class T>
+Matrix<T> Matrix<T>::operator-(Matrix<T> &B)
 {
-    Matrix diff(m_colSize, m_rowSize, 0.0);
+    Matrix<T> diff(m_colSize, m_rowSize, (T) 0);
     unsigned i, j;
     for (i = 0; i < m_rowSize; i++)
     {
         for (j = 0; j < m_colSize; j++)
         {
-            diff(i, j) = this->m_matrix[i][j] + B(i, j);
+            diff(i, j) = this->m_matrix[i][j] - B(i, j);
         }
     }
     return diff;
 }
-Matrix Matrix::operator*(Matrix &B)
+template <class T>
+Matrix<T> Matrix<T>::operator*(Matrix<T> &B)
 {
-    Matrix product(m_rowSize, B.getCols(), 0.0);
+    Matrix<T> product(m_rowSize, B.getCols(), (T) 0);
     if(m_colSize == B.getRows()) 
     {
         unsigned i, j, k;
-        double temp = 0.0;
+        (T) temp = 0;
         for (i = 0; i < m_rowSize; i++)
         {
             for (j = 0; j < B.getCols(); j++)
             {
-                temp = 0.0;
+                temp = (T) 0;
                 for (k = 0; k < m_colSize; k++)
                 {
                     temp += m_matrix[i][k] * B(k, j); //calculating dot product
@@ -231,10 +234,11 @@ void Matrix::print() const
         cout << endl;
     }
 }
-tuple<Matrix, double, int> Matrix::powerIter(unsigned rowNum, double tolerance)
+template <class T> //only works on square matrices
+tuple<Matrix<double>, double, int> Matrix<T>::powerIter(unsigned rowNum, double tolerance)
 {
     //initiate guess
-    Matrix X(rowNum, 1, 1.0);
+    Matrix<double> X(rowNum, 1, 1.0);
     for (unsigned i = 1; i <= rowNum; i++)
     {
         X(i-1, 0) = i;
@@ -273,7 +277,11 @@ tuple<Matrix, double, int> Matrix::powerIter(unsigned rowNum, double tolerance)
     X = X / eigenvalue;
     return make_tuple(X, eigenvalue, errorCode);
 }
-Matrix Matrix::deflation(Matrix &X, double &eigenvalue)
+
+//ignoring this function for now
+/*
+template <class T>
+Matrix<double> Matrix<T>::deflation(Matrix<T> &X, double &eigenvalue)
 {
     // Deflation formula exactly applied
     double denominator = eigenvalue / (X.transpose() * X)(0,0);
@@ -283,6 +291,7 @@ Matrix Matrix::deflation(Matrix &X, double &eigenvalue)
     Matrix A2 = *this - RHS2;
     return A2;
 } 
+*/
 
 Matrix Matrix::get_inverse()
 {

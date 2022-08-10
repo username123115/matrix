@@ -14,40 +14,39 @@
 using std::vector;
 using std::tuple;
 
+template <class T>
 class Matrix 
 {
 public:
-    Matrix(unsigned, unsigned, double); //matrix made from specifying row height and data
-    Matrix(const char *); //matrix takenffrom data in a file
-    Matrix(const Matrix &); //matrix made from matrix
-    //~Matrix(); //destructor for matrix class
+    Matrix(unsigned, unsigned, T);
 
     //operator overloading
-    Matrix operator+(Matrix &);
-    Matrix operator-(Matrix &);
-    Matrix operator*(Matrix &);
-    double& operator()(const unsigned &, const unsigned &); //allows accessing matrix values
-    Matrix transpose(); 
+    Matrix<T> operator+(Matrix<T> &); //template support
+    Matrix<T> operator-(Matrix<T> &); //template support
+    Matrix<T> operator*(Matrix<T> &); //template support
+    T& operator()(const unsigned &, const unsigned &); //allows accessing matrix values
+    Matrix<T> transpose(); 
 
     //Scalar Operations
-    Matrix operator+(double);
-    Matrix operator-(double);
-    Matrix operator*(double);
-    Matrix operator/(double);
+    Matrix<T> operator+(double); 
+    Matrix<T> operator-(double);
+    Matrix<T> operator*(double);
+    Matrix<T> operator/(double);
 
     void print() const;
     unsigned getRows() const;
     unsigned getCols() const;
 
     //experimental inverse function
-    Matrix get_inverse();
-    tuple<Matrix, double, int> powerIter(unsigned, double);
-    Matrix deflation(Matrix &, double&);
+    Matrix<T> get_inverse();
+    tuple<Matrix<double>, double, int> powerIter(unsigned, double); //template support
+    //Matrix<double> deflation(Matrix<T> &, double&); //template support
+
 
 private:
     unsigned m_rowSize;
     unsigned m_colSize;
-    vector<vector<double> > m_matrix;
+    vector<vector<T> > m_matrix; //template support
 };
 
 #endif

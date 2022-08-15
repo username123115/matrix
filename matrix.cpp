@@ -1,4 +1,7 @@
-# include "matrix.h"
+#ifndef MATRIX_CPP
+#define MATRIX_CPP
+
+#include "matrix.h"
 using namespace std;
 template <class T>
 Matrix<T>::Matrix(unsigned rowSize, unsigned colSize, T initial)
@@ -335,9 +338,9 @@ Matrix<T> Matrix<T>::get_inverse()
                     elementary(j, i) = (-1.0 * temp);
                     copy = elementary * copy;
                     Identity = elementary * Identity;
-                    //copy.print();
-                    //std::cout << "Operation performed: " << std::endl;
-                    //elementary.print();
+                    // copy.print();
+                    // std::cout << "Operation performed: " << std::endl;
+                    // elementary.print();
                     elementary(j, i) = 0.0;
                 }
             }
@@ -359,3 +362,4 @@ Matrix<T> Matrix<T>::get_inverse()
         return Identity;
     }
 }
+#endif

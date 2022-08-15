@@ -51,4 +51,6 @@ private:
     vector<vector<T> > m_matrix; //template support
 };
 
+#include "matrix.cpp" //putting method definitions for template class
+
 #endif

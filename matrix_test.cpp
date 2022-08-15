@@ -4,12 +4,13 @@
 
 int main()
 {
-    Matrix<double> a("matrix1.txt");
-    Matrix<double> I = a.get_inverse();
-    a.print();
-    I.print();
-    Matrix<double> Identity = a * I;
-    Identity.print();
+    Matrix<double> a = Matrix<double>("matrix1.txt");
+    Matrix<double> *m = new Matrix<double>("matrix1.txt");
+    std::cout << (*m)(1, 1) << std::endl;
+    delete m;
+    uint32_t x = 143;
+    double y = 0.5;
+    std::cout <<(uint32_t) (x * y) << std::endl;
 
     return 0;
 }

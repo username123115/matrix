@@ -1,2 +1,2 @@
 # matrix
-wow its a cool matrix thing i guess
+This is a matrix library I made mostly for use in my bmp file proccessing program. It is able to create two dimensional matrices of any width and height of type double. Another branch of this project implements templements that allows the user to specify other data types to put into these matrices. It is mostly based on Furkanicus's matrix implementation (https://medium.com/@furkanicus/how-to-create-a-matrix-class-using-c-3641f37809c7) with the only change being the added templates.

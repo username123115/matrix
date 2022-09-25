@@ -26,7 +26,7 @@ public:
     Matrix<T> operator+(Matrix<T> &); //template support
     Matrix<T> operator-(Matrix<T> &); //template support
     Matrix<T> operator*(Matrix<T> &); //template support
-    T& operator()(const unsigned &, const unsigned &); //allows accessing matrix values
+    inline T& operator()(const unsigned &, const unsigned &); //allows accessing matrix values
     Matrix<T> transpose(); 
 
     //Scalar Operations

@@ -125,10 +125,20 @@ Matrix<T> Matrix<T>::operator*(Matrix<T> &B)
         T temp = 0;
         for (i = 0; i < m_rowSize; i++)
         {
-            for (j = 0; j < B.getCols(); j++)
+            // for (j = 0; j < B.getCols(); j++)
+            // {
+            //     temp = (T) 0;
+            //     for (k = 0; k < m_colSize; k++)
+            //     {
+            //         temp += m_matrix[i][k] * B(k, j); //calculating dot product
+            //     }
+            //     product(i, j) = temp;
+            // }
+            //changing loop order supposedly gives performance increase
+            for (k = 0; k < m_colSize; k++)
             {
                 temp = (T) 0;
-                for (k = 0; k < m_colSize; k++)
+                for (j = 0; j < B.getCols(); j++)
                 {
                     temp += m_matrix[i][k] * B(k, j); //calculating dot product
                 }
@@ -200,7 +210,7 @@ template <class T>
     return product;
  }
  template <class T>
-T& Matrix<T>::operator()(const unsigned &rowNo, const unsigned & colNo)
+inline T& Matrix<T>::operator()(const unsigned &rowNo, const unsigned & colNo)
 {
     return this->m_matrix[rowNo][colNo];
 }
